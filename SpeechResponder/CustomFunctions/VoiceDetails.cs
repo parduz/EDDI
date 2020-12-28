@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
-using Cottle.Functions;
+﻿using Cottle.Functions;
 using Cottle.Values;
 using EddiSpeechResponder.Service;
 using EddiSpeechService;
 using JetBrains.Annotations;
+using System.Collections.Generic;
+using System.Linq;
+using System.Speech.Synthesis;
 
 namespace EddiSpeechResponder.CustomFunctions
 {
@@ -18,19 +20,18 @@ namespace EddiSpeechResponder.CustomFunctions
             if (values.Count == 0)
             {
                 List<VoiceDetail> voices = new List<VoiceDetail>();
-                if (SpeechService.Instance?.synth != null)
+                if (SpeechService.Instance?.allVoices != null)
                 {
-                    foreach (System.Speech.Synthesis.InstalledVoice vc in SpeechService.Instance.synth.GetInstalledVoices())
+                    foreach (VoiceInfo vc in SpeechService.Instance.allVoices.Select(v => v.voiceInfo))
                     {
-                        if (!vc.VoiceInfo.Name.Contains("Microsoft Server Speech Text to Speech Voice"))
+                        if (!vc.Name.Contains("Microsoft Server Speech Text to Speech Voice"))
                         {
                             voices.Add(new VoiceDetail(
-                                vc.VoiceInfo.Name,
-                                vc.VoiceInfo.Culture.Parent.EnglishName,
-                                vc.VoiceInfo.Culture.Parent.NativeName,
-                                vc.VoiceInfo.Culture.Name,
-                                vc.VoiceInfo.Gender.ToString(),
-                                vc.Enabled
+                                vc.Name,
+                                vc.Culture.Parent.EnglishName,
+                                vc.Culture.Parent.NativeName,
+                                vc.Culture.Name,
+                                vc.Gender.ToString()
                                 ));
                         }
                     }
@@ -40,20 +41,19 @@ namespace EddiSpeechResponder.CustomFunctions
             if (values.Count == 1)
             {
                 VoiceDetail result = null;
-                if (SpeechService.Instance?.synth != null && !string.IsNullOrEmpty(values[0].AsString))
+                if (SpeechService.Instance?.allVoices != null && !string.IsNullOrEmpty(values[0].AsString))
                 {
-                    foreach (System.Speech.Synthesis.InstalledVoice vc in SpeechService.Instance.synth.GetInstalledVoices())
+                    foreach (VoiceInfo vc in SpeechService.Instance.allVoices.Select(v => v.voiceInfo))
                     {
-                        if (vc.VoiceInfo.Name.ToLowerInvariant().Contains(values[0].AsString.ToLowerInvariant())
-                        && !vc.VoiceInfo.Name.Contains("Microsoft Server Speech Text to Speech Voice"))
+                        if (vc.Name.ToLowerInvariant().Contains(values[0].AsString.ToLowerInvariant())
+                        && !vc.Name.Contains("Microsoft Server Speech Text to Speech Voice"))
                         {
                             result = new VoiceDetail(
-                                vc.VoiceInfo.Name,
-                                vc.VoiceInfo.Culture.Parent.EnglishName,
-                                vc.VoiceInfo.Culture.Parent.NativeName,
-                                vc.VoiceInfo.Culture.Name,
-                                vc.VoiceInfo.Gender.ToString(),
-                                vc.Enabled
+                                vc.Name,
+                                vc.Culture.Parent.EnglishName,
+                                vc.Culture.Parent.NativeName,
+                                vc.Culture.Name,
+                                vc.Gender.ToString()
                                 );
                             break;
                         }
@@ -73,16 +73,14 @@ namespace EddiSpeechResponder.CustomFunctions
         public string culturename { get; }
         public string culturecode { get; }
         public string gender { get; }
-        public bool enabled { get; }
 
-        public VoiceDetail(string name, string cultureinvariantname, string culturename, string culturecode, string gender, bool enabled)
+        public VoiceDetail(string name, string cultureinvariantname, string culturename, string culturecode, string gender)
         {
             this.name = name;
             this.cultureinvariantname = cultureinvariantname;
             this.culturename = culturename;
             this.culturecode = culturecode;
             this.gender = gender;
-            this.enabled = enabled;
         }
     }
 }
