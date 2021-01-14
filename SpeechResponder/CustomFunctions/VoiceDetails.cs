@@ -1,9 +1,9 @@
-﻿using System;
-using Cottle.Functions;
+﻿using Cottle.Functions;
 using Cottle.Values;
 using EddiSpeechResponder.Service;
 using EddiSpeechService;
 using JetBrains.Annotations;
+using System;
 using System.Linq;
 
 namespace EddiSpeechResponder.CustomFunctions

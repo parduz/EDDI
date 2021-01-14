@@ -2,6 +2,7 @@
 using CSCore.Codecs.WAV;
 using CSCore.SoundOut;
 using EddiDataDefinitions;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,11 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using Utilities;
 using Windows.Media.SpeechSynthesis;
-using JetBrains.Annotations;
 
 namespace EddiSpeechService
 {
     /// <summary>Provide speech services with a varying amount of alterations to the voice</summary>
-    public partial class SpeechService : INotifyPropertyChanged, IDisposable
+    public partial class SpeechService : INotifyPropertyChanged
     {
         private const float ActiveSpeechFadeOutMilliseconds = 250;
         public SpeechServiceConfiguration Configuration;
@@ -110,9 +110,6 @@ namespace EddiSpeechService
             // Sort results alphabetically by voice name
             allVoices = allVoices.OrderBy(v => v.name).ToList();
         }
-
-        public void Dispose()
-        { }
 
         public void Say(Ship ship, string message, int priority = 3, string voice = null, bool radio = false, string eventType = null, bool invokedFromVA = false)
         {
@@ -784,10 +781,10 @@ namespace EddiSpeechService
                 // but it does support two letter country codes so we will use those instead
                 guess = Culture.Parent.Name;
             }
-            else if (name.Contains("IVONA") && Culture.Name == "en-GB")
-            {
-                guess = "en-uk";
-            }
+            //else if (name.Contains("IVONA") && Culture.Name == "en-GB")
+            //{
+            //    guess = "en-uk";
+            //}
             else
             {
                 // Trust the voice's information (with the complete country/region code)
