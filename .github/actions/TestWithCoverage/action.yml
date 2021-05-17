@@ -24,13 +24,14 @@ runs:
   - name: Run tests and generate a coverage report
     id: runTests
     run: |
-      $openCoverConsole = "$HOME${{ inputs.opencover-console-path }}"
-      $openCoverArgs = '${{ inputs.opencover-console-args }}'
-      $target = '-target:"${{ inputs.target-path }}"'
-      $targetArgs = '-targetargs:"${{ inputs.target-args }}"'
-      $output = '-output:"${{ inputs.output-path }}"'
+      #$openCoverConsole = "$HOME${{ inputs.opencover-console-path }}"
+      #$openCoverArgs = "${{ inputs.opencover-console-args }}"
+      #$target = '-target:"${{ inputs.target-path }}"'
+      #$targetArgs = '-targetargs:"${{ inputs.target-args }}"'
+      #$output = '-output:"${{ inputs.output-path }}"'
       #$runCoverageCmd = "$openCoverConsole $openCoverArgs $target $targetArgs $output"
       # ECHO Invoking... $runCoverageCmd
       #$runCoverageCmd
-      $openCoverConsole $openCoverArgs $target $targetArgs $output
+      #$openCoverConsole $openCoverArgs $target $targetArgs $output
+      $HOME${{ inputs.opencover-console-path }} ${{ inputs.opencover-console-args }} -target:"${{ inputs.target-path }}" -targetargs:"${{ inputs.target-args }}" -output:"${{ inputs.output-path }}"
     shell: pwsh
