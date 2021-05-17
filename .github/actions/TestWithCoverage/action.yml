@@ -33,5 +33,5 @@ runs:
       # ECHO Invoking... $runCoverageCmd
       #$runCoverageCmd
       #$openCoverConsole $openCoverArgs $target $targetArgs $output
-      "$HOME${{ inputs.opencover-console-path }}" ${{ inputs.opencover-console-args }} -target:"${{ inputs.target-path }}" -targetargs:"${{ inputs.target-args }}" -output:"${{ inputs.output-path }}"
+      $($HOME${{ inputs.opencover-console-path }}) ${{ inputs.opencover-console-args }} -target:"${{ inputs.target-path }}" -targetargs:"${{ inputs.target-args }}" -output:"${{ inputs.output-path }}"
     shell: pwsh
