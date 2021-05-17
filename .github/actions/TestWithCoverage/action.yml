@@ -29,7 +29,7 @@ runs:
       $target = '-target:"${{ inputs.target-path }}"'
       $targetArgs = '-targetargs:"${{ inputs.target-args }}"'
       $output = '-output:"${{ inputs.output-path }}"'
-      $runCoverageCmd = "& $openCoverConsole $openCoverArgs $target $targetArgs $output"
+      $runCoverageCmd = "$openCoverConsole $openCoverArgs $target $targetArgs $output"
       ECHO Invoking... $runCoverageCmd
       $runCoverageCmd
     shell: pwsh
