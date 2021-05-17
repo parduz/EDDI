@@ -34,5 +34,6 @@ runs:
       #$runCoverageCmd
       #$openCoverConsole $openCoverArgs $target $targetArgs $output
       $openCoverConsole = "$HOME${{ inputs.opencover-console-path }}"
-      $openCoverConsole ${{ inputs.opencover-console-args }} -target:"${{ inputs.target-path }}" -targetargs:"${{ inputs.target-args }}" -output:"${{ inputs.output-path }}"
+      $openCoverArgs = "${{ inputs.opencover-console-args }}"
+      $openCoverConsole $openCoverArgs -target:"${{ inputs.target-path }}" -targetargs:"${{ inputs.target-args }}" -output:"${{ inputs.output-path }}"
     shell: pwsh
