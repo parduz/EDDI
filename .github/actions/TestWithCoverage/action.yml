@@ -29,15 +29,7 @@ runs:
       $target = '-target:"${{ inputs.target-path }}"'
       $targetArgs = '-targetargs:"${{ inputs.target-args }}"'
       $output = '-output:"${{ inputs.output-path }}"'
-      $runCoverageCmd = "$openCoverConsole $openCoverArgs $target $targetArgs $output"
+      $runCoverageCmd = "& $openCoverConsole $openCoverArgs $target $targetArgs $output"
       ECHO Invoking... $runCoverageCmd
-
-      # Wrap the invokation so that we can act on its success or failure
-      $runCoverageCmd += ';$?'
-      $result = Invoke-Expression $runCoverageCmd
-      ECHO $result
-      if(-not $result){
-        # seems to have failed
-        ECHO "::error::Tests failed"
-      }
+      $runCoverageCmd
     shell: pwsh
